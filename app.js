@@ -9,6 +9,7 @@ require("dotenv").config();
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
+const router = require("./routes/auth.routes");
 
 //connect mongoDB
 mongoose.connect(
@@ -48,6 +49,11 @@ app.use(function(request, response, next) {
     response.locals.currentUser = request.user;
     next();
 });
+
+//routers
+app.use("/user", require("./routes/user.routes"));
+app.use("/auth", require("./routes/auth.routes"));
+app.use("/order", require("./routes/order.routes"));
 
 //==================== routes ====================//
 
