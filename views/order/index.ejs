@@ -1,0 +1,9 @@
+<h2>List of orders</h2>
+
+<ul>
+    <% orders.forEach(element => { %>
+        <li> 
+            <a href="/order/index/<%= element._id %>"> <%= element._id %> </a>  
+        </li>
+    <% }); %>
+</ul>

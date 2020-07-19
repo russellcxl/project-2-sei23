@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const passport = require("passport");
+const passport = require("../lib/passportConfig");
 const isLoggedIn = require("../lib/checkBlock");
 const User = require("../models/user.model");
 
@@ -13,24 +13,28 @@ router.get("/register", (req, res) => {
 router.post("/register", async (req, res) => {
     try {
         let user = await new User(req.body);
-
         req.body.role === "admin" ? user.isAdmin = true : user.isStaff = true;
-
         await user.save();
-
         res.redirect("/user/index");
     }
     catch(err) {
-        console.log(err);
+        console.log(err.errors["email"].message);//mongoose model error
     }
 });
 
 //==================== login ====================//
 
+router.get("/login", (req, res) => {
+    res.render("auth/login");
+});
 
-
-
-
-
+router.post("/login",
+    passport.authenticate("local", {
+        successRedirect: "/user/index",
+        failureRedirect: "/auth/login",
+        failureFlash: "Invalid Username or Password",
+        successFlash: "You have logged In!"
+    })
+);
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const router = require("express").Router();
+const isLoggedIn = require("../lib/checkBlock");
 
 //==================== index ====================//
 

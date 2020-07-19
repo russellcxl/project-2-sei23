@@ -6,14 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/custom.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
     <script src="/js/jquery.min.js"></script>
     <title>Haste</title>
 </head>
 
 <body>
+    <!-- login flash messages -->
+    <% if (alerts.success) {alerts.success.forEach(msg => { %>
+        <div class="alert alert-success"><%= msg %> </div>
+    <% });}; %>
+
+    <% if (alerts.error) {alerts.error.forEach(msg => { %>
+        <div class="alert alert-danger"><%= msg %> </div>
+    <% });}; %>
+    
+    <% if (alerts.autherror) {alerts.autherror.forEach(msg => { %>
+        <div class="alert alert-danger">Your <%= msg.params %> has <%= msg.msg %></div>
+    <% });}; %>
+    
+
+
     <!-- navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#"> <img src="/images/logo.jpg" style="height: 2rem" alt=""></a>
+        <a class="navbar-brand" href="#"> <img src="/images/logo.png" style="height: 2rem" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -28,8 +45,8 @@
                         Orders
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">View</a>
-                        <a class="dropdown-item" href="#">Add</a>
+                        <a class="dropdown-item" href="/order/index">View</a>
+                        <a class="dropdown-item" href="/order/new">Add new</a>
                     </div>
                 </li>
 
@@ -37,17 +54,18 @@
                     <a class="nav-link" href="/">Delivery</a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/index">Users</a>
+                </li>
+
             </ul>
-
-
         </div>
     </nav>
-
 
     <%- body %>
 
     <!-- footer -->
-    <div class="footer-container" style="position: absolute; bottom: 0; background: #212529; width:100%">
+    <!-- <div class="footer-container" style="position: absolute; bottom: 0; background: #212529; width:100%">
         <div class="mx-auto" style="display: flex; justify-content: center; color: whitesmoke">
             <div class="column" style="width: 700px;">
                 <h3 class="mb-5">Keep in touch</h3>
@@ -55,14 +73,15 @@
                     <tbody>
                         <tr>
                             <td style="padding-right: 2em;">GitHub </td>
-                            <td style="color: #ffd152;">github.com/russellcxl</td>
+                            <td style="color: #ffc107;">github.com/russellcxl</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>
+    </div> -->
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
     <script src="/js/custom.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 </body>

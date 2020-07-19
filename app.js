@@ -58,11 +58,11 @@ app.use("/order", require("./routes/order.routes"));
 //==================== routes ====================//
 
 app.get("/", (req, res) => {
-    res.render("test");
+    res.redirect("/user/index");
 });
 
 //==================== port listen ====================//
 
 app.listen(process.env.PORT, function() {
-    console.log(`Haste running at localhost:${process.env.PORT}`);
+    console.log(`HASTE running at localhost:${process.env.PORT}`);
 })

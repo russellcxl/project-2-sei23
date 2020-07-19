@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 let UserSchema = new mongoose.Schema({
+
     name: { type: String, required: [true, `Please enter your name`] },
 
     email: { 
@@ -9,10 +10,10 @@ let UserSchema = new mongoose.Schema({
         required: [true, `Email required for login purposes`],
         validate: {
             validator: function (email) {
-                let regex = /^\S+@\S+\.\S+$/;
+                let regex = /\S+@\S+\.\S+/;
                 return regex.test(String(email).toLowerCase());
             },
-            message: props => `${props} is not a valid email!`
+            message: props => `${props.value} is not a valid email!`
         } 
     },
 
@@ -25,8 +26,9 @@ let UserSchema = new mongoose.Schema({
     isStaff: { type: Boolean, default: false }
 });
 
+//==================== password hashing ====================//
 
-//hash password before saving
+//before saving entry
 UserSchema.pre("save", function(next) {
 
     if (!this.isModified("password")) return next();
@@ -35,11 +37,11 @@ UserSchema.pre("save", function(next) {
     next();
 });
 
+//used for local strategy in passportConfig
 UserSchema.methods.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
 };
 
-
-
+//==================== export ====================//
 
 module.exports = mongoose.model("User", UserSchema);
