@@ -1,9 +1,70 @@
-<h2>List of orders</h2>
+<div class="page-titles">
+    <h2>ORDERS</h2>
+</div>
 
-<ul>
-    <% orders.forEach(element => { %>
-        <li> 
-            <a href="/order/index/<%= element._id %>"> <%= element._id %> </a>  
-        </li>
-    <% }); %>
-</ul>
+<div class="row">
+    <div class="col-sm-1"></div>
+
+    <div class="col-sm-8">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Deliver by</th>
+                    <th scope="col">Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% orders.forEach(x => { %>
+                    <tr>
+                        <th scope="row"><%= orders.indexOf(x) + 1 %></th>
+                        <td><%= x.customer.name %> </td>
+                        
+                        <td>
+                            <% x.orders.forEach(y => { %>
+                            <p><%= y.product %></p>
+                            <% }) %>
+                        </td>
+                        
+                        <td>
+                            <% x.orders.forEach(y => { %>
+                            <p><%= y.quantity %></p>
+                            <% }) %>
+                        </td>
+                        
+                        <td><%= x.customer.address %> </td>
+                        <td><%= x.expectedDelivery %> </td>
+                        <td><%= x.status %> </td>
+                        <td>
+                            <form action="/order/index/<%= x._id %>" method="GET">
+                                <button class="btn btn-warning">View/edit</button>
+                            </form>
+                        </td>
+                    </tr>
+                    
+                <% }) %>
+            </tbody>
+        </table>
+
+        <form action="/order/new" method="GET" style="display: flex; justify-content: center;">
+            <button class="btn btn-warning" id="new-order-button"><i class="fas fa-plus""></i></button>
+        </form>
+
+    </div>
+    <div class="col-sm-3">col3</div>
+</div>
+
+<script>
+    function shortenDate(x) {
+        let arr = x.split(' ');
+        arr.splice(4);
+        let day = `, ${arr.shift()}`;
+        let newStr = arr.join(' ');
+        return newStr + day;
+    }
+</script>

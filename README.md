@@ -35,21 +35,19 @@ User = {
     password
 }
 
+Order = {
+    customer name
+    products + qty
+    status
+    delivery date
+}
+
 Customer = {
     name
     phone
     address
     postal
-    orders: [ { item, quantity } ]
-    expectedDelivery: { date, time }
-    status //either unfulfilled, partially-fulfillled or fulfilled
-}
-
-Item = {
-    name
-    stock
 }
 ```
-
 
 

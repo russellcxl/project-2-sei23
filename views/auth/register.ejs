@@ -1,18 +1,55 @@
-<form action="/auth/register" method="POST">
-    <label for="">Name</label>
-    <input name="name" type="text"><br>
+<div class="page-titles">
+    <h2>NEW USER</h2>
+</div>
 
-    <label for="">Email</label>
-    <input name="email" type="text"><br>
 
-    <label for="">Password</label>
-    <input name="password" type="password"><br>
+<form action="/auth/register" style="margin: 0 19%;" method="POST" id="order-form">
 
-    <label for="">Admin</label>
-    <input name="role" type="radio" value="admin">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+            <input name="name" type="text" class="form-control">
+        </div>
+    </div>
 
-    <label for="">Staff</label>
-    <input name="role" type="radio" value="staff"><br>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input name="email" type="text" class="form-control">
+        </div>
+    </div>
 
-    <button class="btn btn-primary" type="submit">Add new user</button>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+            <input name="password" type="password" class="form-control">
+        </div>
+    </div>
+
+    <fieldset class="form-group">
+        <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Privileges</legend>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="role" value="admin" checked>
+                    <label class="form-check-label">
+                        Admin
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="role" value="staff">
+                    <label class="form-check-label">
+                        Staff
+                    </label>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="form-group row">
+        <div class="col-sm-12 mt-sm-3" style="display: flex; justify-content: flex-end;">
+            <button type="submit" class="btn btn-primary">Create user</button>
+        </div>
+    </div>
+
 </form>

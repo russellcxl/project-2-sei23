@@ -3,6 +3,33 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
 }
 
+/* NAV BAR */
+
+#navbar-profile {
+    width: 2rem;
+    border-radius: 100%;
+    background: whitesmoke;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* would like for the user's information to slide out on the left */
+#navbar-profile:hover {
+    background: #ffc107;
+}
+
+#login-logout {
+    color: whitesmoke;
+}
+
+.navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover, #login-logout:hover {
+    color: #ffc107;
+}
+
+/* LOGIN PAGE */
+
 .wrap-login {
     position: absolute;
     top: 16%;
@@ -79,4 +106,19 @@ body {
 
 .alert {
     margin-bottom: 0;
+}
+
+
+/* CREATE ORDER */
+
+.page-titles {
+    font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
+    margin: 40px 0 50px 0;
+}
+
+/* ORDER INDEX */
+
+#new-order-button {
+    border-radius: 50%;
 }

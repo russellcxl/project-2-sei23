@@ -54,11 +54,12 @@ app.use(function(request, response, next) {
 app.use("/user", require("./routes/user.routes"));
 app.use("/auth", require("./routes/auth.routes"));
 app.use("/order", require("./routes/order.routes"));
+app.use("/customer", require("./routes/customer.routes"));
 
 //==================== routes ====================//
 
 app.get("/", (req, res) => {
-    res.redirect("/user/index");
+    res.redirect("/order/index");
 });
 
 //==================== port listen ====================//

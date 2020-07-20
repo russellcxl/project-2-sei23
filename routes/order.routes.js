@@ -7,7 +7,13 @@ const Customer = require("../models/customer.model");
 //==================== new ====================//
 
 router.get("/new", async (req, res) => {
-    res.render("order/new");
+    try {
+        res.render("order/new");
+    }
+    catch(err) {
+        console.log(err);
+    }
+    
 });
 
 router.post("/new", async (req, res) => {
@@ -43,7 +49,7 @@ router.post("/new", async (req, res) => {
 
 router.get("/index", async (req, res) => {
     try {
-        let orders = await Order.find();
+        let orders = await Order.find().populate("customer");
         res.render("order/index", {orders});
     }
     catch(err) {
@@ -53,7 +59,7 @@ router.get("/index", async (req, res) => {
 
 router.get("/index/:id", async (req, res) => {
     try {
-        let order = await Order.findById(req.params.id).populate("customer");
+        let order = await Order.findById(req.params.id).populate("customer", "-orders");
         res.send(order);
     }
     catch(err) {
@@ -61,5 +67,15 @@ router.get("/index/:id", async (req, res) => {
     }
 });
 
+//==================== complimentary functions ====================//
+
+//Date's output and input format are different; this doesn't work
+function shortenDate(x) {
+    let arr = x.split(' ');
+    arr.splice(4);
+    let day = `, ${arr.shift()}`;
+    let newStr = arr.join(' ');
+    return newStr + day;
+}
 
 module.exports = router;

@@ -15,22 +15,21 @@
 <body>
     <!-- login flash messages -->
     <% if (alerts.success) {alerts.success.forEach(msg => { %>
-        <div class="alert alert-success"><%= msg %> </div>
+    <div class="alert alert-success"><%= msg %> </div>
     <% });}; %>
 
     <% if (alerts.error) {alerts.error.forEach(msg => { %>
-        <div class="alert alert-danger"><%= msg %> </div>
+    <div class="alert alert-danger"><%= msg %> </div>
     <% });}; %>
-    
+
     <% if (alerts.autherror) {alerts.autherror.forEach(msg => { %>
-        <div class="alert alert-danger">Your <%= msg.params %> has <%= msg.msg %></div>
+    <div class="alert alert-danger">Your <%= msg.params %> has <%= msg.msg %></div>
     <% });}; %>
-    
 
 
     <!-- navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#"> <img src="/images/logo.png" style="height: 2rem" alt=""></a>
+        <a class="navbar-brand" href="/order/index"> <img src="/images/logo.png" style="height: 2rem" alt=""></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -45,8 +44,8 @@
                         Orders
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/order/index">View</a>
-                        <a class="dropdown-item" href="/order/new">Add new</a>
+                        <a class="dropdown-item" href="/order/index">View all orders</a>
+                        <a class="dropdown-item" href="/order/new">Add new order</a>
                     </div>
                 </li>
 
@@ -55,10 +54,29 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/user/index">Users</a>
+                    <a class="nav-link" href="/customer/index">Customers</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Users
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/user/index">View all users</a>
+                        <a class="dropdown-item" href="/auth/register">Add new user</a>
+                    </div>
                 </li>
 
             </ul>
+
+
+            <a href="/auth/login" class="nav-item" id="login-logout">Login</a>
+            
+            <div id="navbar-profile">
+                <i class="fa fa-user"></i><br>
+            </div>
+
         </div>
     </nav>
 

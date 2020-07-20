@@ -26,5 +26,16 @@ router.get("/index/:id", async (req, res) => {
     }
 });
 
+//==================== search ====================//
 
-module.exports = router;
+router.get("/search", async (req, res) => {
+    try {
+        let searchedUser = await User.find({ name: new RegExp(req.query.search, 'i') });
+        res.send(searchedUser);
+    }   
+    catch(err) {
+        console.log(err);
+    } 
+});
+
+module.exports   = router;
