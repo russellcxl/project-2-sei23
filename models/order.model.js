@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 
 let OrderSchema = new mongoose.Schema({
 
@@ -32,6 +33,11 @@ let OrderSchema = new mongoose.Schema({
     ]
 
 }, { timestamps: true });
+
+
+OrderSchema.methods.shortenDate = function () {
+    return moment(this.expectedDelivery).format("MMMM Do YYYY");
+};
 
 //==================== export ====================//
 

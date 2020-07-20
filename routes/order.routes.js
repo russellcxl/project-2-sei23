@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Order = require("../models/order.model");
 const User = require("../models/user.model");
 const Customer = require("../models/customer.model");
+const moment = require("moment");
 
 
 //==================== new ====================//
@@ -50,7 +51,47 @@ router.post("/new", async (req, res) => {
 router.get("/index", async (req, res) => {
     try {
         let orders = await Order.find().populate("customer");
-        res.render("order/index", {orders});
+
+        //unfulfilled orders; $match is the same as Model.find
+        let unfulfilled = await Order.aggregate([
+            { $match: { status: { $eq: "unfulfilled" } } }
+        ]);
+
+        //deliveries today
+        //toDate() converts date into JS format
+        let deliveriesToday = await Order.find({
+            expectedDelivery: {
+                $gte: moment().startOf('day').toDate(),
+                $lt: moment().endOf('day').toDate()
+            }
+        });
+        
+        //orders made today
+        let ordersToday = await Order.find({
+            createdAt: {
+                $gte: moment().startOf('day').toDate(),
+                $lt: moment().endOf('day').toDate()
+            }
+        });
+
+        //most popular product
+        let mostPopular = await Order.aggregate([
+            { $unwind: "$orders" },
+            { $group: 
+                {
+                    _id: "$orders.product",
+                    count: { $sum: "$orders.quantity" }
+                }
+            },
+            { $sort:
+                {
+                    count: -1
+                } 
+            }
+        
+        ]);
+
+        res.render("order/index", { orders, unfulfilled, deliveriesToday, ordersToday, mostPopular });
     }
     catch(err) {
         console.log(err);
@@ -67,15 +108,6 @@ router.get("/index/:id", async (req, res) => {
     }
 });
 
-//==================== complimentary functions ====================//
-
-//Date's output and input format are different; this doesn't work
-function shortenDate(x) {
-    let arr = x.split(' ');
-    arr.splice(4);
-    let day = `, ${arr.shift()}`;
-    let newStr = arr.join(' ');
-    return newStr + day;
-}
+//==================== export ====================//
 
 module.exports = router;

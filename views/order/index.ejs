@@ -1,11 +1,10 @@
-<div class="page-titles">
-    <h2>ORDERS</h2>
-</div>
-
 <div class="row">
     <div class="col-sm-1"></div>
 
     <div class="col-sm-8">
+        <div class="order-index-headers" style="text-align: left;">
+            <h2>Orders</h2>
+        </div>
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -38,7 +37,7 @@
                         </td>
                         
                         <td><%= x.customer.address %> </td>
-                        <td><%= x.expectedDelivery %> </td>
+                        <td><%= x.shortenDate() %> </td>
                         <td><%= x.status %> </td>
                         <td>
                             <form action="/order/index/<%= x._id %>" method="GET">
@@ -56,15 +55,43 @@
         </form>
 
     </div>
-    <div class="col-sm-3">col3</div>
+    <div class="col-sm-3">
+        <div class="order-index-headers" style="text-align: left;">
+            <h2>Statistics</h2>
+        </div>
+
+        <div class="card text-center" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Deliveries today: </h5>
+                <h1 class="card-text"><%= deliveriesToday.length %> </h1>
+            </div>
+        </div>
+        
+        <div class="card text-center" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Orders today: </h5>
+                <h1 class="card-text"><%= ordersToday.length %> </h1>
+            </div>
+        </div>
+        
+        <div class="card text-center" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Total unfulfilled: </h5>
+                <h1 class="card-text"><%= unfulfilled.length %> </h1>
+            </div>
+        </div>
+        <div class="card text-center" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Most popular product: </h5>
+                <h1 class="card-text"><%= mostPopular[0]._id %> </h1>
+            </div>
+        </div>
+    </div>
 </div>
 
+
 <script>
-    function shortenDate(x) {
-        let arr = x.split(' ');
-        arr.splice(4);
-        let day = `, ${arr.shift()}`;
-        let newStr = arr.join(' ');
-        return newStr + day;
-    }
+    // $("#new-order-button").hover(function() {
+    //     $("#new-order-button").html("<p>New order</p>");
+    // });
 </script>

@@ -22,6 +22,8 @@ body {
 
 #login-logout {
     color: whitesmoke;
+    margin-right: 10px;
+    text-decoration: none;
 }
 
 .navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover, #login-logout:hover {
@@ -121,4 +123,28 @@ body {
 
 #new-order-button {
     border-radius: 50%;
+}
+
+#new-order-button:hover {
+    animation: buttonExpand ease-out 1s forwards;
+}
+
+@keyframes buttonExpand {
+    0% {
+        width: 50px;
+    }
+    20% {
+        border-radius: 4%;
+    }
+    100% {
+        width: 160px;
+        border-radius: 4%;
+    }
+}
+
+.order-index-headers {
+    padding-left: 30px;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-align: left;
+    margin: 40px 0 30px 0;
 }
