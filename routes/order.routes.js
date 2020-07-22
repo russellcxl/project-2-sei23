@@ -105,15 +105,15 @@ router.get("/index", async (req, res) => {
 //==================== fulfill ====================//
 
 
-// router.post("/fulfill/:id", async (req, res) => {
-//     try {
-//         await Order.findByIdAndUpdate(req.params.id, {status: "fulfilled"});
-//         res.redirect("/order/index");
-//     }
-//     catch(err) {
-//         console.log(err);
-//     }
-// });
+router.post("/fulfill/:id", async (req, res) => {
+    try {
+        await Order.findByIdAndUpdate(req.params.id, {status: "fulfilled"});
+        res.redirect("/delivery/index");
+    }
+    catch(err) {
+        console.log(err);
+    }
+});
 
 
 //==================== edit/delete ====================//

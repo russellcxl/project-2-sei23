@@ -1,9 +1,11 @@
-<h2>Delivery page</h2>
+<div class="page-titles">
+    <h2>DELIVERIES FOR TODAY</h2>
+</div>
 
 <div class="row" style="margin: 2% 5% 0 5%;">
 
     <!-- delivery list -->
-    <div class="col-sm-4">
+    <div class="col-sm-4" style="max-width: 100%;">
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -11,7 +13,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Product</th>
                     <th scope="col">Contact</th>
-                    <th></th>
+                    <th></th>qua
                     <th></th>
                     <th></th>
                 </tr>
@@ -25,7 +27,7 @@
                     <td>
                         <% order.orders.forEach(pdt => { %>
 
-                        <p><%= pdt.product %> x <%= pdt.quantity %></p>
+                        <p><%= pdt.product %> x <%= pdt.ntity %></p>
 
                         <% }) %>
                     </td>
@@ -34,10 +36,12 @@
                         <button class="btn btn-warning">View</button>
                     </td>
                     <td>
-                        <button class="btn btn-primary">Locate</button>
+                        <button class="btn btn-primary" class="locate-button">Locate</button>
                     </td>
                     <td>
-                        <button class="btn btn-primary">Fulfill</button>
+                        <form action="/order/fulfill/<%= order._id %>" method="POST">
+                            <button type="submit" class="btn btn-primary" class="fulfill-button">Fulfill</button>
+                        </form>
                     </td>
                 </tr>
             </tbody>
@@ -48,11 +52,57 @@
     </div>
 
     <!-- map -->
-    <div class="col-sm-8">
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15954.855556446282!2d103.87719677124109!3d1.3481568679385556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da17a154e8af3f%3A0xebd9eb7a0592dbf2!2sSerangoon!5e0!3m2!1sen!2ssg!4v1595401031311!5m2!1sen!2ssg"
-            width="100%" height="800px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
-            tabindex="0">
-        </iframe>
-    </div>
+    <div class="col-sm-8" id="map-container"></div>
+
+
 </div>
+
+<script>
+
+    function initMap() {
+
+        //set map view on load
+        let singapore = { lat: 1.3521, lng: 103.8198 };
+        let initialView = {
+            zoom: 12,
+            center: singapore
+        }
+        let map = new google.maps.Map(document.getElementById("map-container"), initialView);
+
+        addMarker(map, myHouse);
+    }
+
+    //for adding markers to the map
+    function addMarker(map, obj) {
+        let marker = new google.maps.Marker(
+            {
+                position: { lat: obj.lat, lng: obj.lng },
+                map: map,
+                icon: obj.iconURL
+            }
+        );
+
+        if (obj.text) {
+            let infoWindow = new google.maps.InfoWindow({
+                content: `<p>${obj.text}</p>`
+            });
+
+            marker.addListener("click", function () {
+                infoWindow.open(map, marker);
+            });
+        }
+
+    }
+
+    let myHouse = {
+            lat: 1.3571,
+            lng: 103.8598,
+            text: "Hola",
+            iconURL: ""
+        }
+    
+    //locator buttons
+    let $locateBtns = document.getElementsByClassName("locate-button");
+    // marker.setAnimation(google.maps.Animation.BOUNCE);
+
+</script>

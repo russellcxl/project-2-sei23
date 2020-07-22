@@ -51,6 +51,7 @@ console.log(document.getElementsByClassName("date"));
 let $sortBtn = document.getElementById("sort-button");
 let $sortBy = document.getElementById("sort-by");
 let $sortText = document.getElementById("sort-text");
+let $tableRows = document.querySelectorAll("tbody>tr");
 
 //hide input bars
 $sortBtn.addEventListener("click", function() {
@@ -69,13 +70,14 @@ headers.forEach(header => {
 });
 
 //sort listener
-$sortText.addEventListener("change", function() {
+$sortBy.addEventListener("change", function() {
     
     //gets values for a property set by $sortBy
     let arrToSort = Array
-        .from(document.getElementsByClassName(`${$sortBy.value.toLowerCase()}`)).map(x => x.innerText);
-    console.log(arrToSort);
+        .from(document.getElementsByClassName(`${$sortBy.value.toLowerCase()}`))
+        .map(x => x.innerText);
 
+    console.log(arrToSort);
 
     if ($sortBy.value.toLowerCase() === "product") {
         if ($sortText.value === "ascending") {
@@ -88,7 +90,7 @@ $sortText.addEventListener("change", function() {
 
     else {
         if ($sortText.value === "ascending") {
-            //sortArray(arrToSort);
+            sortArray(arrToSort);
         }
         else {
             
@@ -102,27 +104,53 @@ $sortText.addEventListener("change", function() {
 
 //sort function
 //keeps running an infinite loop
+// function sortArray(arr) {
+//     let shouldSwitch = false;
+//     let switching = true;
+
+//     while (switching) {
+//         switching = false;
+
+//         for (let i = 0; i < arr.length - 1; i++) {
+//             shouldSwitch = false;
+//             if (arr[i] > arr[i + 1]) {
+//                 $table.insertBefore($table.childNodes[2 * (i + 1) + 1], $table.childNodes[2 * i + 1]);
+//                 shouldSwitch = true;
+//                 console.log("switched");
+//                 break;
+//             }
+//         }
+//         if (shouldSwitch) {
+//             switching = true;
+//         }
+//     }
+// }
+
 function sortArray(arr) {
-    let shouldSwitch = false;
-    let switching = true;
-
-    while (switching) {
-        switching = false;
-
-        for (let i = 0; i < arr.length - 1; i++) {
-            shouldSwitch = false;
-            if (arr[i] > arr[i + 1]) {
-                $table.insertBefore($table.childNodes[2 * (i + 1) + 1], $table.childNodes[2 * i + 1]);
-                shouldSwitch = true;
-                console.log("switched");
-                break;
+    let mapped = arr
+        .map((e, i) => {
+            return { oldIndex: i, value: e[0] };
+        })
+        .sort((a, b) => {
+            if (a.value > b.value) {
+                return 1;
             }
-        }
-        if (shouldSwitch) {
-            switching = true;
-        }
+            if (a.value < b.value) {
+                return -1;
+            }
+            return 0;
+        });
+
+    for (let i = 0 ; i < mapped.length ; i++) {
+        let oldIndex = mapped[i].oldIndex;
+        let newIndex = i;
+        $table.appendChild($tableRows[oldIndex]);    
     }
 }
 
+// $table.insertBefore($tableRows[2], $tableRows[0])
 
-//==================== edit order page ====================//
+
+//==================== google map ====================//
+
+

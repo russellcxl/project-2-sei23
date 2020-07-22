@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const expressEjsLayouts = require("express-ejs-layouts");
 const methodOverride = require("method-override");
 const isLoggedin = require("./lib/checkBlock");
+const { Client, Status } = require("@googlemaps/google-maps-services-js");
 
 require("dotenv").config();
 
@@ -15,7 +16,7 @@ const router = require("./routes/auth.routes");
 
 //connect mongoDB server
 mongoose.connect(
-    process.env.MONGOLIVE,
+    process.env.MONGODB,
     {
        useCreateIndex: true,
        useNewUrlParser: true,

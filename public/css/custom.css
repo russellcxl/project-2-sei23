@@ -152,3 +152,10 @@ a.sort-filter {
 a.sort-filter:hover {
     color: #ffc107;
 }
+
+/* DELIVERY INDEX */
+
+#map-container {
+    height: 700px;
+    width: 100%;
+}
