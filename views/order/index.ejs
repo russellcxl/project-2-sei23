@@ -68,7 +68,7 @@
                         </td>
                         
                         <td class="address"><%= x.customer.address %> </td>
-                        <td class="date"><%= x.shortenDate() %> </td>
+                        <td class="deliver by"><%= x.shortenDate() %> </td>
                         <td class="status"><%= x.status %> </td>
                         <td>
                             <form action="/order/edit/<%= x._id %>" method="GET">
@@ -125,5 +125,4 @@
 
 <script>
     
-
 </script>

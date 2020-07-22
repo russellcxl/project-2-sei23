@@ -35,6 +35,12 @@ router.post("/new", async (req, res) => {
             expectedDelivery: expectedDelivery
         }).save();
 
+        await Customer.findByIdAndUpdate(customer._id, 
+                {
+                    $push: {orders: order._id}
+                }
+            );
+        
         res.redirect("/order/index");
 
     }
@@ -159,7 +165,16 @@ router.post("/edit/:id", async (req, res) => {
 
 router.delete("/delete/:id", async (req, res) => {
     try {
-        await Order.findByIdAndDelete(req.params.id);
+        //removes order from customer
+        await Customer.update(
+            {},
+            { $pull: { orders: req.params.id } },
+            { multi: true }
+        );
+
+        //removes order
+        await Order.remove( { _id: { $eq: req.params.id } } );
+        
         res.redirect("/order/index");
     }
     catch(err) {

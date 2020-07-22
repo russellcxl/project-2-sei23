@@ -5,7 +5,7 @@ const User = require("../models/user.model");
 
 //==================== register ====================//
 
-router.get("/register", (req, res) => {
+router.get("/register", isLoggedIn, (req, res) => {
     res.render("auth/register");
 });
 

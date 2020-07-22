@@ -108,11 +108,13 @@
     let $addRow = document.querySelector("#add-row");
     let $phoneRow = document.querySelector("#phone-row");
     let $form = document.querySelector("#order-form");
+    let $removeBtns = document.getElementsByClassName("remove-row");
+    let $additionalRows = document.getElementsByClassName("additional-row");
 
     $addRow.addEventListener("click", function() {
         $phoneRow.insertAdjacentHTML("beforebegin", 
             `
-            <div class="form-group row">
+            <div class="form-group row additional-row">
                 <label class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-7">
                     <input name="orders[${$form.childNodes.length - 14}][product]" type="text" class="form-control"  placeholder="Product name">
@@ -129,13 +131,15 @@
             </div>
             `
         );
+
+        for (let i = 0; i < $removeBtns.length; i++) {
+            $removeBtns[i].addEventListener("click", function () {
+                $additionalRows[i].remove();
+            });
+        }
     });
 
     let $removeRows = document.getElementsByClassName("remove-row");
     //how to target particular row?
-
-    $(document).ready(function() {
-        console.log('works');
-    });
 
 </script>

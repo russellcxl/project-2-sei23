@@ -1,13 +1,12 @@
 html {
     height: 100%;
+    width: 100%;
 }
 
 body {
     background: #f3f2f2;
     font-family: 'Source Sans Pro', sans-serif;
-    height: 100%;
 }
-
 
 /* NAV BAR */
 
@@ -128,24 +127,14 @@ body {
 /* ORDER INDEX */
 
 #new-order-button {
-    border-radius: 50%;
+    border-radius: 2rem;
+    width: 50px;
+    transition: 0.7s ease-out;
 }
 
 #new-order-button:hover {
-    animation: buttonExpand ease-out 1s forwards;
-}
-
-@keyframes buttonExpand {
-    0% {
-        width: 50px;
-    }
-    20% {
-        border-radius: 4%;
-    }
-    100% {
-        width: 160px;
-        border-radius: 4%;
-    }
+    width: 160px;
+    transition: 0.7s ease-out;
 }
 
 .order-index-headers {

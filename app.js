@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const expressEjsLayouts = require("express-ejs-layouts");
-// const methodOverride = require("method-override");
+const methodOverride = require("method-override");
+const isLoggedin = require("./lib/checkBlock");
 
 require("dotenv").config();
 
@@ -29,7 +30,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded( {extended: true} ));
 app.set("view engine", "ejs");
 app.use(expressEjsLayouts);
-// app.use(methodOverride('_method'));
+app.use(methodOverride('_method'));
 
 //express sessions
 app.use(
@@ -53,16 +54,17 @@ app.use(function(request, response, next) {
 });
 
 //routers
-app.use("/user", require("./routes/user.routes"));
+app.use("/user", isLoggedin, require("./routes/user.routes"));
 app.use("/auth", require("./routes/auth.routes"));
 app.use("/order", require("./routes/order.routes"));
 app.use("/customer", require("./routes/customer.routes"));
+app.use("/delivery", require("./routes/delivery.routes"));
 
 //==================== routes ====================//
 
 app.get("/", (req, res) => {
-    res.send("hello heroku");
-    // res.redirect("/order/index");
+    //res.send("hello heroku");
+    res.redirect("/order/index");
 });
 
 //==================== port listen ====================//

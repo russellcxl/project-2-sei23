@@ -68,25 +68,18 @@ headers.forEach(header => {
     $sortBy.appendChild($newOption);
 });
 
-
-let testArr = Array
-        .from(document.getElementsByClassName(`${$sortBy.value.toLowerCase()}`))
-        .map(x => x.textContent);
-
-
 //sort listener
 $sortText.addEventListener("change", function() {
     
     //gets values for a property set by $sortBy
-    let sortArr = Array
-        .from(document.getElementsByClassName(`${$sortBy.value.toLowerCase()}`))
-        .map(x => x.textContent);
+    let arrToSort = Array
+        .from(document.getElementsByClassName(`${$sortBy.value.toLowerCase()}`)).map(x => x.innerText);
+    console.log(arrToSort);
+
 
     if ($sortBy.value.toLowerCase() === "product") {
         if ($sortText.value === "ascending") {
-
-            let sortArrProducts = sortArr.map(x => x.match(/\w+(\s\w+)?/gi).length); //[blue chair, red chair, ...]
-            
+            //let productsToSort = arrToSort.map(x => x.match(/\w+(\s\w+)?/gi).length); //[blue chair, red chair, ...]
         }
         else {
 
@@ -95,7 +88,7 @@ $sortText.addEventListener("change", function() {
 
     else {
         if ($sortText.value === "ascending") {
-            //sortArray(testArr);
+            //sortArray(arrToSort);
         }
         else {
             
@@ -108,7 +101,7 @@ $sortText.addEventListener("change", function() {
 //(2n-1) to select node in $table.childNodes
 
 //sort function
-//cannot work :( keeps running an infinite loop
+//keeps running an infinite loop
 function sortArray(arr) {
     let shouldSwitch = false;
     let switching = true;
