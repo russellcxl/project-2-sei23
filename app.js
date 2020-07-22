@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const expressEjsLayouts = require("express-ejs-layouts");
-const methodOverride = require("method-override");
+// const methodOverride = require("method-override");
 
 require("dotenv").config();
 
@@ -29,7 +29,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded( {extended: true} ));
 app.set("view engine", "ejs");
 app.use(expressEjsLayouts);
-app.use(methodOverride('_method'));
+// app.use(methodOverride('_method'));
 
 //express sessions
 app.use(
@@ -61,7 +61,8 @@ app.use("/customer", require("./routes/customer.routes"));
 //==================== routes ====================//
 
 app.get("/", (req, res) => {
-    res.redirect("/order/index");
+    res.send("hello heroku");
+    // res.redirect("/order/index");
 });
 
 //==================== port listen ====================//
