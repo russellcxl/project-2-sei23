@@ -2,12 +2,43 @@
     <div class="col-sm-1"></div>
 
     <div class="col-sm-8">
-        <div class="order-index-headers" style="text-align: left;">
-            <h2>Orders</h2>
+        <div class="row order-index-headers" style="text-align: left;">
+            <div class="col-sm-6">
+                <h2>Orders</h2>
+            </div>
+
+            <!-- sort and filter icons/buttons -->
+            <div class="col-sm-6" class="sort-filter-div" style="display: flex; justify-content: flex-end; align-items: flex-end; padding-right: 40px">
+                
+                <!-- sort -->
+                <a href="#" class="sort-filter mr-2" id="sort-button">
+                    <p style="margin-bottom: 0.5rem;">
+                        <i class="fas fa-sort-amount-up"></i> Sort
+                    </p>
+                </a>
+                <select class="custom-select mr-1" style="width: 120px; display: none;" name="by" id="sort-by"></select>
+                <select class="custom-select mr-2" style="width: 120px; display: none;" id="sort-text">
+                    <option value="ascending">Ascending</option>
+                    <option value="descending">Descending</option>
+                </select>
+
+                <!-- filter -->
+                <a href="#" class="sort-filter" id="filter-button">
+                    <p style="margin-bottom: 0.5rem;">
+                        <i class="fas fa-filter"></i> Filter
+                    </p>
+                </a>
+                <select class="custom-select mx-1" style="width: 120px; display: none;" name="by" id="filter-by"></select>
+                <input class="form-control" style="width: 120px; display: none;" type="text" name="filter" id="filter-text"> 
+
+            </div>
+            
         </div>
+
+        <!-- table of orders -->
         <table class="table">
             <thead class="thead-dark">
-                <tr>
+                <tr id="table-header-names">
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Product</th>
@@ -22,25 +53,25 @@
                 <% orders.forEach(x => { %>
                     <tr>
                         <th scope="row"><%= orders.indexOf(x) + 1 %></th>
-                        <td><%= x.customer.name %> </td>
+                        <td class="name"><%= x.customer.name %> </td>
                         
-                        <td>
+                        <td class="product">
                             <% x.orders.forEach(y => { %>
                             <p><%= y.product %></p>
                             <% }) %>
                         </td>
                         
-                        <td>
+                        <td class="quantity">
                             <% x.orders.forEach(y => { %>
                             <p><%= y.quantity %></p>
                             <% }) %>
                         </td>
                         
-                        <td><%= x.customer.address %> </td>
-                        <td><%= x.shortenDate() %> </td>
-                        <td><%= x.status %> </td>
+                        <td class="address"><%= x.customer.address %> </td>
+                        <td class="date"><%= x.shortenDate() %> </td>
+                        <td class="status"><%= x.status %> </td>
                         <td>
-                            <form action="/order/index/<%= x._id %>" method="GET">
+                            <form action="/order/edit/<%= x._id %>" method="GET">
                                 <button class="btn btn-warning">View/edit</button>
                             </form>
                         </td>
@@ -51,12 +82,14 @@
         </table>
 
         <form action="/order/new" method="GET" style="display: flex; justify-content: center;">
-            <button class="btn btn-warning" id="new-order-button"><i class="fas fa-plus""></i></button>
+            <button class="btn btn-warning" id="new-order-button"><i class="fas fa-plus" id="new-order-icon"></i></button>
         </form>
 
     </div>
+
+    <!-- statistics board -->
     <div class="col-sm-3">
-        <div class="order-index-headers" style="text-align: left;">
+        <div class="row order-index-headers" style="text-align: left;">
             <h2>Statistics</h2>
         </div>
 
@@ -83,7 +116,7 @@
         <div class="card text-center" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">Most popular product: </h5>
-                <h1 class="card-text"><%= mostPopular[0]._id %> </h1>
+                <h2 class="card-text" style="font-weight: 600;"><%= mostPopular[0]._id %> </h2>
             </div>
         </div>
     </div>
@@ -91,7 +124,6 @@
 
 
 <script>
-    // $("#new-order-button").hover(function() {
-    //     $("#new-order-button").html("<p>New order</p>");
-    // });
+    
+
 </script>

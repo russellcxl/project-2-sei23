@@ -3,7 +3,7 @@
 <ul>
     <% customers.forEach(element => { %>
         <li>
-            <a href="#"><%= element.name %> </a>
+            <a href="/customer/show/<%= element._id %> "><%= element.name %> </a>
         </li>
     <% }) %>
 </ul>

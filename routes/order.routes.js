@@ -35,8 +35,6 @@ router.post("/new", async (req, res) => {
             expectedDelivery: expectedDelivery
         }).save();
 
-        customer.orders.push(order._id);
-
         res.redirect("/order/index");
 
     }
@@ -98,15 +96,77 @@ router.get("/index", async (req, res) => {
     }
 });
 
-router.get("/index/:id", async (req, res) => {
+//==================== fulfill ====================//
+
+
+// router.post("/fulfill/:id", async (req, res) => {
+//     try {
+//         await Order.findByIdAndUpdate(req.params.id, {status: "fulfilled"});
+//         res.redirect("/order/index");
+//     }
+//     catch(err) {
+//         console.log(err);
+//     }
+// });
+
+
+//==================== edit/delete ====================//
+
+
+router.get("/edit/:id", async (req, res) => {
     try {
         let order = await Order.findById(req.params.id).populate("customer", "-orders");
-        res.send(order);
+        res.render("order/edit", {order});
     }
     catch(err) {
         console.log(err);
     }
 });
+
+
+router.post("/edit/:id", async (req, res) => {
+    try {
+
+        let { name, orders, phone, address, postal, expectedDelivery, status } = req.body;
+
+        await Order.findByIdAndUpdate(req.params.id, 
+                {
+                    orders: orders,
+                    expectedDelivery: expectedDelivery,
+                    status: status
+                }
+            );
+
+        let order = await Order.findById(req.params.id);
+        let customerId = order.customer;
+
+        await Customer.findByIdAndUpdate(customerId, 
+                {
+                    name: name,
+                    phone: phone,
+                    address: address,
+                    postal: postal
+                }
+            );
+
+        res.redirect("/order/index");
+    }
+    catch(err) {
+        console.log(err);
+    }
+});
+
+
+router.delete("/delete/:id", async (req, res) => {
+    try {
+        await Order.findByIdAndDelete(req.params.id);
+        res.redirect("/order/index");
+    }
+    catch(err) {
+        console.log(err);
+    }
+});
+
 
 //==================== export ====================//
 

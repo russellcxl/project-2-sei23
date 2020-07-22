@@ -1,0 +1,141 @@
+<div class="page-titles">
+    <h2>EDIT ORDER</h2>
+</div>
+
+
+<form action="/order/edit/<%= order._id %>" style="margin: 0 19%;" method="POST" id="order-form">
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Customer name</label>
+        <div class="col-sm-10">
+            <input name="name" type="text" class="form-control" value="<%= order.customer.name %> ">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Orders</label>
+        <div class="col-sm-7">
+            <input name="orders[0][product]" type="text" class="form-control" placeholder="Product name" value="<%= order.orders[0].product %>">
+        </div>
+
+        <label class="col-sm-1 col-form-label">Quantity</label>
+        <div class="col-sm-1">
+            <input name="orders[0][quantity]" data-id="0" class="form-control" type="number" value="<%= order.orders[0].quantity %>" />
+        </div>
+
+        <div class="col-sm-1">
+            <button class="btn" id="add-row" type="button"><i class="fas fa-plus"></i></button>
+        </div>         
+
+    </div>
+
+    <% if (order.orders.length > 1) { %>
+        <% for( let i = 1; i < order.orders.length; i++ ) { %>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-7">
+                    <input name="orders[${$form.childNodes.length - 14}][product]" type="text" class="form-control"  value="<%= order.orders[i].product %> ">
+                </div>
+
+                <label class="col-sm-1 col-form-label">Quantity</label>
+                <div class="col-sm-1">
+                    <input name="orders[${$form.childNodes.length - 14}][quantity]" data-id="0" class="form-control" type="number" value="<%= parseInt(order.orders[i].quantity) %>"/>
+                </div>
+
+                <div class="col-sm-1">
+                    <button class="btn" class="remove-row" type="button"><i class="fas fa-minus"></i></button>
+                </div>
+            </div>
+        <% } %>
+    <% } %> 
+
+    <div class="form-group row" id="phone-row">
+        <label class="col-sm-2 col-form-label">Phone number</label>
+        <div class="col-sm-10">
+            <input name="phone" type="text" class="form-control" value="<%= order.customer.phone %> ">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Address</label>
+        <div class="col-sm-10">
+            <input name="address" type="text" class="form-control" value="<%= order.customer.address %>" >
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Postal code</label>
+        <div class="col-sm-10">
+            <input name="postal" type="text" class="form-control" value="<%= order.customer.postal %>" >
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Expected delivery date</label>
+        <div class="col-sm-10">
+            <input name="expectedDelivery" type="date" class="form-control" value="<%= order.displayDate() %>">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Status</label>
+        <div class="col-sm-10">
+            <select name="status" class="custom-select">
+                <option value="unfulfilled">Unfulfilled</option>
+                <option value="partially fulfilled">Partially fulfilled</option>
+                <option value="fulfilled">Fulfilled</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12 mt-sm-3" style="display: flex; justify-content: flex-end;">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
+
+</form>
+
+<div class="form-group row" style="margin: 0 19%; justify-content: flex-end;">
+    <form action="/order/delete/<%= order._id %>?_method=DELETE" method="POST">
+        <button type="submit" class="btn btn-danger">Delete order</button>
+    </form>
+</div>
+
+<!-- script for adding new item row -->
+
+<script>
+    let $addRow = document.querySelector("#add-row");
+    let $phoneRow = document.querySelector("#phone-row");
+    let $form = document.querySelector("#order-form");
+
+    $addRow.addEventListener("click", function() {
+        $phoneRow.insertAdjacentHTML("beforebegin", 
+            `
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-7">
+                    <input name="orders[${$form.childNodes.length - 14}][product]" type="text" class="form-control"  placeholder="Product name">
+                </div>
+
+                <label class="col-sm-1 col-form-label">Quantity</label>
+                <div class="col-sm-1">
+                    <input name="orders[${$form.childNodes.length - 14}][quantity]" data-id="0" class="form-control" type="number"/>
+                </div>
+
+                <div class="col-sm-1">
+                    <button class="btn" class="remove-row" type="button"><i class="fas fa-minus"></i></button>
+                </div>
+            </div>
+            `
+        );
+    });
+
+    let $removeRows = document.getElementsByClassName("remove-row");
+    //how to target particular row?
+
+    $(document).ready(function() {
+        console.log('works');
+    });
+
+</script>

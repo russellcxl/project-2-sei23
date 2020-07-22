@@ -14,4 +14,11 @@ router.get("/index", async (req, res) => {
     
 });
 
+//==================== show (temp) ====================//
+
+router.get("/show/:id", async (req, res) => {
+    let customer = await Customer.findById(req.params.id);
+    res.send(customer);
+})
+
 module.exports = router;

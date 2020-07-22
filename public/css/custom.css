@@ -1,7 +1,13 @@
+html {
+    height: 100%;
+}
+
 body {
     background: #f3f2f2;
     font-family: 'Source Sans Pro', sans-serif;
+    height: 100%;
 }
+
 
 /* NAV BAR */
 
@@ -146,5 +152,14 @@ body {
     padding-left: 30px;
     font-family: 'Source Sans Pro', sans-serif;
     text-align: left;
-    margin: 40px 0 30px 0;
+    margin: 50px 0 10px 0;
+}
+
+a.sort-filter {
+    text-decoration: none; 
+    color: grey;
+}
+
+a.sort-filter:hover {
+    color: #ffc107;
 }

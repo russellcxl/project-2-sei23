@@ -35,9 +35,23 @@ let OrderSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-OrderSchema.methods.shortenDate = function () {
-    return moment(this.expectedDelivery).format("MMMM Do YYYY");
+OrderSchema.methods.shortenDate = function() {
+    return moment(this.expectedDelivery).format("MMMM Do YYYY, ddd");
 };
+
+//for populating the date input when editing orders
+OrderSchema.methods.displayDate = function() {
+    return moment(this.expectedDelivery).format("YYYY-MM-DD");
+};
+
+//for removing order from customer when order is deleted
+OrderSchema.pre("remove", function(next) {
+    this.model("Customer").remove( {$pull: {orders: {$elemMatch: {_id: this.customer} } } } , next);
+});
+
+OrderSchema.post("save", function(next) {
+    this.model("Customer").update( {$push: {orders: this._id } } )
+});
 
 //==================== export ====================//
 

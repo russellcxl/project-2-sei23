@@ -13,6 +13,8 @@
 </head>
 
 <body>
+    <div class="main-container">
+
     <!-- login flash messages -->
     <% if (alerts.success) {alerts.success.forEach(msg => { %>
     <div class="alert alert-success"><%= msg %> </div>
@@ -46,10 +48,6 @@
                     <a class="nav-link" href="/">Delivery</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/customer/index">Customers</a>
-                </li>
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -65,7 +63,7 @@
 
 
             <a href="/auth/login" class="nav-item" id="login-logout">Login</a>
-            
+
             <div id="navbar-profile">
                 <i class="fa fa-user"></i><br>
             </div>
@@ -75,22 +73,14 @@
 
     <%- body %>
 
+    </div>
+
     <!-- footer -->
-    <!-- <div class="footer-container" style="position: absolute; bottom: 0; background: #212529; width:100%">
-        <div class="mx-auto" style="display: flex; justify-content: center; color: whitesmoke">
-            <div class="column" style="width: 700px;">
-                <h3 class="mb-5">Keep in touch</h3>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td style="padding-right: 2em;">GitHub </td>
-                            <td style="color: #ffc107;">github.com/russellcxl</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div> -->
+    <!-- <footer class="bg-dark text-right" style="position: absolute; bottom: 0; width: 100%; margin-top: 120px;">
+        <p class="h6 pr-4 py-3 my-auto text-warning">
+            <a class="badge badge-warning text-dark" href="https://github.com/russellcxl/" target="_blank">russellcxl <i class="fab fa-github"></i></a>
+        </p>
+    </footer> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
     <script src="/js/custom.js"></script>

@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const expressEjsLayouts = require("express-ejs-layouts");
+const methodOverride = require("method-override");
 
 require("dotenv").config();
 
@@ -11,15 +12,15 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const router = require("./routes/auth.routes");
 
-//connect mongoDB
+//connect mongoDB server
 mongoose.connect(
-    process.env.MONGODB,
+    process.env.MONGOLIVE,
     {
        useCreateIndex: true,
        useNewUrlParser: true,
        useUnifiedTopology: true 
     },
-    () => console.log("MongoDB connected for Haste")
+    () => console.log("MongoDB connected live for Haste")
 );
 
 //==================== middleware ====================//
@@ -28,6 +29,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded( {extended: true} ));
 app.set("view engine", "ejs");
 app.use(expressEjsLayouts);
+app.use(methodOverride('_method'));
 
 //express sessions
 app.use(
