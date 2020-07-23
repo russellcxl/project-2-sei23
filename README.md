@@ -26,8 +26,6 @@ The index page will display all orders. The headers can be adjusted according to
 
 The view/edit buttons are only accessible by verified user i.e. the staff.
 
-The panel on the right should be self-explanatory.
-
 ![delivery](public/images/delivery-page.jpg)
 The delivery page displays all orders due on that day. Again, there are buttons to view the order in more detail, locate the order on the map as well as to fulfill the order quickly.
 
@@ -37,6 +35,11 @@ I may withdraw the key for Google Maps in the future, so you may find that the m
 I hope to allow the app to make requests for information from databases and parse that information accordingly.
 
 I also hope to turn this into a mobile app, or at least have it viewable on a mobile screen, since it is almost certain that whoever has to use this app will be using it while on the go.
+
+Other improvements/fixes to be made:
+- Validate address/postal
+- Include a product database to keep track of stocks
+- Set user location
 
 ### Wireframe
 ![wireframe](public/images/wireframe.PNG)

@@ -126,11 +126,13 @@
                 </div>
 
                 <div class="col-sm-1">
-                    <button class="btn" class="remove-row" type="button"><i class="fas fa-minus"></i></button>
+                    <button class="btn remove-row" type="button"><i class="fas fa-minus"></i></button>
                 </div>
             </div>
             `
         );
+
+        $removeBtns = document.getElementsByClassName("remove-row");
 
         for (let i = 0; i < $removeBtns.length; i++) {
             $removeBtns[i].addEventListener("click", function () {
@@ -139,7 +141,5 @@
         }
     });
 
-    let $removeRows = document.getElementsByClassName("remove-row");
-    //how to target particular row?
 
 </script>

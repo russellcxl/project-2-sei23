@@ -76,6 +76,8 @@
 
     $addRow.addEventListener("click", function() {
 
+        
+
         $phoneRow.insertAdjacentHTML("beforebegin", 
             `
             <div class="form-group row additional-row">
@@ -95,6 +97,8 @@
             </div>
             `
         );
+
+        $removeBtns = document.getElementsByClassName("remove-row");
 
         for (let i = 0; i < $removeBtns.length; i++) {
             $removeBtns[i].addEventListener("click", function () {
