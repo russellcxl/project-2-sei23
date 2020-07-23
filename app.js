@@ -16,7 +16,7 @@ const router = require("./routes/auth.routes");
 
 //connect mongoDB server
 mongoose.connect(
-    process.env.MONGODB,
+    process.env.MONGOLIVE,
     {
        useCreateIndex: true,
        useNewUrlParser: true,
@@ -58,13 +58,12 @@ app.use(function(request, response, next) {
 app.use("/user", isLoggedin, require("./routes/user.routes"));
 app.use("/auth", require("./routes/auth.routes"));
 app.use("/order", require("./routes/order.routes"));
-app.use("/customer", require("./routes/customer.routes"));
+app.use("/customer", isLoggedin, require("./routes/customer.routes"));
 app.use("/delivery", require("./routes/delivery.routes"));
 
 //==================== routes ====================//
 
 app.get("/", (req, res) => {
-    //res.send("hello heroku");
     res.redirect("/order/index");
 });
 

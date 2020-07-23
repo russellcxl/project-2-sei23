@@ -2,10 +2,10 @@
     <h2>DELIVERIES FOR TODAY</h2>
 </div>
 
-<div class="row" style="margin: 2% 5% 0 5%;">
+<div class="row" style="margin: 2% 2% 0 5%;">
 
     <!-- delivery list -->
-    <div class="col-sm-4" style="max-width: 100%;">
+    <div class="col-sm-3" style="max-width: 100%;">
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -13,7 +13,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Product</th>
                     <th scope="col">Contact</th>
-                    <th></th>qua
+                    <th></th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -27,20 +27,20 @@
                     <td>
                         <% order.orders.forEach(pdt => { %>
 
-                        <p><%= pdt.product %> x <%= pdt.ntity %></p>
+                        <p><%= pdt.product %> x <%= pdt.quantity %></p>
 
                         <% }) %>
                     </td>
                     <td><%= order.customer.phone %></td>
                     <td>
-                        <button class="btn btn-warning">View</button>
+                        <button class="btn btn-warning view-button">View</button>
                     </td>
                     <td>
-                        <button class="btn btn-primary" class="locate-button">Locate</button>
+                        <button class="btn btn-primary locate-button">Locate</button>
                     </td>
                     <td>
                         <form action="/order/fulfill/<%= order._id %>" method="POST">
-                            <button type="submit" class="btn btn-primary" class="fulfill-button">Fulfill</button>
+                            <button type="submit" class="btn btn-primary fulfill-button">Fulfill</button>
                         </form>
                     </td>
                 </tr>
@@ -52,57 +52,124 @@
     </div>
 
     <!-- map -->
-    <div class="col-sm-8" id="map-container"></div>
-
+    <div class="col-sm-7" id="map-container"></div>
 
 </div>
 
+<!-- modal -->
+
+<% ordersToday.forEach(order => { %>
+
+<div class="modal-container" style="display: none;">
+        
+        <div class="card modal-card" style="width: 40rem; height: 20rem;">
+            <div class="card-body">
+                <h5 class="card-title"><%= order.customer.name %></h5>
+                <h6 class="card-subtitle mb-2 text-muted">Contact: <%= order.customer.phone %> </h6>
+                <h6 class="card-subtitle mb-2 text-muted">Address: <%= order.customer.address %>, S(<%= order.customer.postal %>) </h6>
+                <h6 class="card-subtitle mb-2 text-muted">Ordered on: <%= order.shortenDate() %></h6>
+                <p class="card-text">Orders: </p>
+                <ul>
+                    <% order.orders.forEach(pdt => { %>
+                        <li><%= pdt.product %> x <%= pdt.quantity %> </li>
+                    <% }) %>
+                    
+                </ul>
+                <br>
+                <a href="/order/edit/<%= order._id%> " class="card-link">Edit order</a>
+            </div>
+        </div>
+
+</div>
+
+<% }) %>
+
+
 <script>
+    
+    let $locateBtns = document.getElementsByClassName("locate-button");
+    let $viewBtns = document.getElementsByClassName("view-button");
+
+    let addresses = <%- JSON.stringify(addresses) %>;
+    let map;
+    let markers = [];
+
+
+    //==================== google maps ====================//
+
 
     function initMap() {
 
-        //set map view on load
+        //set map center to Singapore
         let singapore = { lat: 1.3521, lng: 103.8198 };
         let initialView = {
             zoom: 12,
             center: singapore
         }
-        let map = new google.maps.Map(document.getElementById("map-container"), initialView);
+        map = new google.maps.Map(document.getElementById("map-container"), initialView);
+    
+        for (let i = 0; i < addresses.length; i++) {
+            setTimeout(function() {
+                addMarker(addresses[i]);
+            }, i * 200)
+        }
+    }    
 
-        addMarker(map, myHouse);
+    //set bounce when locator is clicked
+    for (let i = 0; i < $locateBtns.length; i++) {
+        $locateBtns[i].addEventListener("click", function() {
+            markers[i].setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function () {
+                markers[i].setAnimation(null);
+            }, 2100)
+        });
     }
 
-    //for adding markers to the map
-    function addMarker(map, obj) {
+    //add markers to map
+    function addMarker(obj) {
         let marker = new google.maps.Marker(
             {
-                position: { lat: obj.lat, lng: obj.lng },
-                map: map,
-                icon: obj.iconURL
+                position: { lat: parseFloat(obj.lat), lng: parseFloat(obj.lng) },
+                map,
+                animation: google.maps.Animation.DROP
             }
         );
+        
+        markers.push(marker);
 
+        //text window
         if (obj.text) {
             let infoWindow = new google.maps.InfoWindow({
                 content: `<p>${obj.text}</p>`
             });
 
-            marker.addListener("click", function () {
+            marker.addListener("mouseover", function () {
                 infoWindow.open(map, marker);
             });
-        }
 
+            marker.addListener("mouseout", function () {
+                infoWindow.close();
+            });
+        }
     }
 
-    let myHouse = {
-            lat: 1.3571,
-            lng: 103.8598,
-            text: "Hola",
-            iconURL: ""
-        }
+    //==================== modals ====================//
+
+    let $modals = document.getElementsByClassName("modal-container");
+
+    for (let i = 0; i < $viewBtns.length; i++) {
+        $viewBtns[i].addEventListener("click", function() {
+            $modals[i].style.display = "";
+        });        
+    }
+
+    for (let i = 0; i < $modals.length; i++) {
+        window.addEventListener('click', function (e) {
+            if (e.target == $modals[i]) {
+                $modals[i].style.display = "none";
+            }
+        });
+    }
     
-    //locator buttons
-    let $locateBtns = document.getElementsByClassName("locate-button");
-    // marker.setAnimation(google.maps.Animation.BOUNCE);
 
 </script>

@@ -3,11 +3,13 @@ const Order = require("../models/order.model");
 const User = require("../models/user.model");
 const Customer = require("../models/customer.model");
 const moment = require("moment");
+const isLoggedin = require("../lib/checkBlock");
 
 
 //==================== new ====================//
 
-router.get("/new", async (req, res) => {
+
+router.get("/new", isLoggedin, async (req, res) => {
     try {
         res.render("order/new");
     }
@@ -16,6 +18,7 @@ router.get("/new", async (req, res) => {
     }
     
 });
+
 
 router.post("/new", async (req, res) => {
     try {
@@ -78,6 +81,13 @@ router.get("/index", async (req, res) => {
             }
         });
 
+        //overdue orders
+        let overdue = await Order.find({
+            expectedDelivery: {
+                $lt: moment().startOf('day').toDate()
+            }
+        });
+
         //most popular product
         let mostPopular = await Order.aggregate([
             { $unwind: "$orders" },
@@ -95,7 +105,7 @@ router.get("/index", async (req, res) => {
         
         ]);
 
-        res.render("order/index", { orders, unfulfilled, deliveriesToday, ordersToday, mostPopular });
+        res.render("order/index", { orders, unfulfilled, deliveriesToday, ordersToday, mostPopular, overdue });
     }
     catch(err) {
         console.log(err);
@@ -119,7 +129,7 @@ router.post("/fulfill/:id", async (req, res) => {
 //==================== edit/delete ====================//
 
 
-router.get("/edit/:id", async (req, res) => {
+router.get("/edit/:id", isLoggedin, async (req, res) => {
     try {
         let order = await Order.findById(req.params.id).populate("customer", "-orders");
         res.render("order/edit", {order});
