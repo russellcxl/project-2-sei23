@@ -39,9 +39,5 @@ router.get("/index", async (req, res) => {
 });
 
 
-router.get("/show", async (req, res) => {
-
-});
-
 
 module.exports = router;

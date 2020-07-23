@@ -37,4 +37,10 @@ router.post("/login",
     })
 );
 
+router.get("/logout", (request, response) => {
+    request.logout();
+    request.flash("success", "Successfully logged out!");
+    response.redirect("/order/index");
+});
+
 module.exports = router;

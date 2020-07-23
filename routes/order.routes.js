@@ -115,7 +115,7 @@ router.get("/index", async (req, res) => {
 //==================== fulfill ====================//
 
 
-router.post("/fulfill/:id", async (req, res) => {
+router.post("/fulfill/:id", isLoggedin, async (req, res) => {
     try {
         await Order.findByIdAndUpdate(req.params.id, {status: "fulfilled"});
         res.redirect("/delivery/index");
