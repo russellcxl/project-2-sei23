@@ -22,7 +22,7 @@ mongoose.connect(
        useNewUrlParser: true,
        useUnifiedTopology: true 
     },
-    () => console.log("MongoDB connected live for Haste")
+    () => console.log("MongoDB connected for Haste")
 );
 
 //==================== middleware ====================//

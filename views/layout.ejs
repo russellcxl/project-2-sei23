@@ -70,11 +70,14 @@
 
             </ul>
 
+            <% if (currentUser) { %>
+                <a href="/auth/logout" class="nav-item" id="login-logout">Logout</a>
+                <div id="navbar-profile">
+                    <i class="fa fa-user"></i><br>
+                </div>
+            <% } %>
 
-            <a href="/auth/logout" class="nav-item" id="login-logout">Logout</a>
-            <div id="navbar-profile">
-                <i class="fa fa-user"></i><br>
-            </div>
+            
 
         </div>
     </nav>
