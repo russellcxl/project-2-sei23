@@ -55,6 +55,10 @@ body {
     background: #ffc107;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
+    padding-top: 150px;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 150px;
 }
 
 .login-right {
@@ -113,6 +117,17 @@ body {
 
 .alert {
     margin-bottom: 0;
+}
+
+#login-logo-left {
+    width: 60px;
+    height: 40px;
+}
+
+.login-right>.header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 
