@@ -92,6 +92,7 @@
 
     let addresses = <%- JSON.stringify(addresses) %>;
     let map;
+    let infoWindow;
     let markers = [];
 
 
@@ -108,22 +109,47 @@
         }
         map = new google.maps.Map(document.getElementById("map-container"), initialView);
     
+        //set markers of customers
         for (let i = 0; i < addresses.length; i++) {
             setTimeout(function() {
                 addMarker(addresses[i]);
             }, i * 200)
         }
-    }    
+        
+        infoWindow = new google.maps.InfoWindow
 
-    //set bounce when locator is clicked
-    for (let i = 0; i < $locateBtns.length; i++) {
-        $locateBtns[i].addEventListener("click", function() {
-            markers[i].setAnimation(google.maps.Animation.BOUNCE);
-            setTimeout(function () {
-                markers[i].setAnimation(null);
-            }, 2100)
-        });
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+
+                console.log(position);
+                let pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                infoWindow.setPosition(pos);
+                infoWindow.setContent('You are here');
+                infoWindow.open(map);
+                map.setCenter(pos);
+            }, function () {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
     }
+
+
+    //in case browser does not handle geolocation
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
+
 
     //add markers to map
     function addMarker(obj) {
@@ -152,6 +178,38 @@
             });
         }
     }
+
+    //interactions with locator buttons
+    for (let i = 0; i < $locateBtns.length; i++) {
+        $locateBtns[i].addEventListener("click", function() {
+            map.setCenter(markers[i].position);
+            smoothZoom(16, map.getZoom())
+        });
+        $locateBtns[i].addEventListener("mouseover", function() {
+            markers[i].setAnimation(google.maps.Animation.BOUNCE);
+        });
+        $locateBtns[i].addEventListener("mouseout", function() {
+            markers[i].setAnimation(null);
+        }); 
+    }
+
+
+    //for smooth zooming in
+    function smoothZoom(max, currentZoom) {
+        if (currentZoom >= max) {
+            return;
+        }
+        else {
+            z = google.maps.event.addListener(map, 'zoom_changed', function (event) {
+                    google.maps.event.removeListener(z);
+                    smoothZoom(map, max, currentZoom++);
+                });
+            setTimeout(function () {
+                map.setZoom(currentZoom); 
+            }, 100);
+        }
+    }  
+
 
     //==================== modals ====================//
 
