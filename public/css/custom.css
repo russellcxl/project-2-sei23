@@ -168,6 +168,42 @@ a.sort-filter:hover {
     color: #ffc107;
 }
 
+#filter-div {
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+    width: 900px;
+}
+
+#filter-button {
+    display: flex;
+    align-items: flex-end;
+    transition: ease-in 0.5s;
+    position: relative;
+    right: -245px;
+    background-color: #f3f2f2;
+}
+
+#filter-button:hover {
+    right: 0;
+    transition: ease-in 0.5s;
+}
+
+#sort-button {
+    display: flex;
+    align-items: flex-end;
+}
+
+#sort-div {
+    display: flex;
+    position: relative;
+    right: -520px;
+}
+
+
+
+
+
 /* DELIVERY INDEX */
 
 #map-container {

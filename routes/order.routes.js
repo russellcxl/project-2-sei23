@@ -120,7 +120,7 @@ router.get("/index", async (req, res) => {
 
 router.post("/fulfill/:id", isLoggedin, async (req, res) => {
     try {
-        await Order.findByIdAndUpdate(req.params.id, {status: "fulfilled"});
+        await Order.findByIdAndUpdate(req.params.id, {status: "done"});
         res.redirect("/delivery/index");
     }
     catch(err) {

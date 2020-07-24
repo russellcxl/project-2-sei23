@@ -18,7 +18,7 @@ let OrderSchema = new mongoose.Schema({
 
     status: { 
         type: String,
-        enum: ["unfulfilled", "partially fulfilled", "fulfilled"],
+        enum: ["unfulfilled", "partially fulfilled", "done"],
         default: "unfulfilled"
     },
 

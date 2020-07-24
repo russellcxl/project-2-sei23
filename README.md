@@ -40,6 +40,7 @@ Other improvements/fixes to be made:
 - Validate address/postal
 - Include a product database to keep track of stocks
 - Set user location
+- Add "overdue" status to model and create an instance that checks everyday if an order is overdue
 
 ### Wireframe
 ![wireframe](public/images/wireframe.PNG)

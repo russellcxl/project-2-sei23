@@ -8,28 +8,39 @@
             </div>
 
             <!-- sort and filter icons/buttons -->
-            <div class="col-sm-6" class="sort-filter-div" style="display: flex; justify-content: flex-end; align-items: flex-end; padding-right: 40px">
+            <div class="col-sm-6" class="sort-filter-div"
+                style="display: flex; justify-content: flex-end; align-items: flex-end; padding-right: 40px">
+            
                 
-                <!-- sort -->
-                <a href="#" class="sort-filter mr-2" id="sort-button">
-                    <p style="margin-bottom: 0.5rem;">
-                        <i class="fas fa-sort-amount-up"></i> Sort
-                    </p>
-                </a>
-                <select class="custom-select mr-1" style="width: 120px; display: none;" name="by" id="sort-by"></select>
-                <select class="custom-select mr-2" style="width: 120px; display: none;" id="sort-text">
-                    <option value="ascending">Ascending</option>
-                    <option value="descending">Descending</option>
-                </select>
 
-                <!-- filter -->
-                <a href="#" class="sort-filter" id="filter-button">
-                    <p style="margin-bottom: 0.5rem;">
-                        <i class="fas fa-filter"></i> Filter
-                    </p>
-                </a>
-                <select class="custom-select mx-1" style="width: 120px; display: none;" name="by" id="filter-by"></select>
-                <input class="form-control" style="width: 120px; display: none;" type="text" name="filter" id="filter-text"> 
+                
+                <div id="filter-div">
+
+                    <!-- sort -->
+                    <!-- <div id="sort-div">
+                        <a href="#" class="sort-filter mr-2" id="sort-button">
+                            <p style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+                                <i class="fas fa-sort-amount-up"></i> Sort
+                            </p>
+                            <select class="custom-select mr-1" style="width: 120px;" name="by" id="sort-by"></select>
+                            <select class="custom-select mr-2" style="width: 120px;" id="sort-text">
+                                <option value="ascending">Ascending</option>
+                                <option value="descending">Descending</option>
+                            </select>
+                        </a>
+                    </div> -->
+                    
+
+                    <!-- filter -->
+                    <a href="#" class="sort-filter" id="filter-button">
+                        <p style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+                            <i class="fas fa-filter"></i> Filter
+                        </p>
+                        <select class="custom-select mx-1" style="width: 120px;" name="by" id="filter-by"></select>
+                        <input class="form-control" style="width: 120px;" type="text" name="filter" id="filter-text">
+                    </a>
+                </div>
+                
 
             </div>
             
@@ -90,7 +101,7 @@
     <!-- statistics board -->
     <div class="col-sm-3">
         <div class="row order-index-headers" style="text-align: left;">
-            <h2>Statistics</h2>
+            <h2>Summary</h2>
         </div>
 
         <div class="card text-center" style="width: 18rem;">
@@ -150,12 +161,15 @@
         .filter(x => x.match(/\w+/i)); //[name, address, ...]
 
     //hide input bars
-    $filterBtn.addEventListener("click", function() {
-        if ($filterBy.style.display === "none") $filterBy.style.display = "";
-        else $filterBy.style.display = "none";
-        if ($filterText.style.display === "none") $filterText.style.display = "";
-        else $filterText.style.display = "none";
-    });
+    // $filterBtn.addEventListener("mouseover", function() {
+    //     $filterBy.style.display = "";
+    //     $filterText.style.display = "";
+    // });
+
+    // $filterBtn.addEventListener("mouseout", function() {
+    //     $filterBy.style.display = "none";
+    //     $filterText.style.display = "none";
+    // });
 
     //populate drop down bar (filter by:)
     headers.forEach(header => {
