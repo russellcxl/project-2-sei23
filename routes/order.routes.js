@@ -85,6 +85,9 @@ router.get("/index", async (req, res) => {
         let overdue = await Order.find({
             expectedDelivery: {
                 $lt: moment().startOf('day').toDate()
+            },
+            status: {
+                $in: [ "unfulfilled", "partially fulfilled" ]
             }
         });
 
