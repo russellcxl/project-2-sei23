@@ -14,9 +14,9 @@
     <script src="/js/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.15.2/dist/sweetalert2.all.min.js"></script>
     <!-- website -->
-    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWbUXUoEjBIfvNji_8-Ea9DNwAW4hv5tc&callback=initMap" type="text/javascript"></script> -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.GOOGLEKEY_WEBSITE %> &callback=initMap" type="text/javascript"></script>
     <!-- local testing -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZaY7kYqwxO8F28TloZ_7kbsW8rS_rltw&callback=initMap" type="text/javascript"></script>
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.GOOGLEKEY_LOCAL %> &callback=initMap" type="text/javascript"></script> -->
     <title>Haste</title>
 </head>
 
