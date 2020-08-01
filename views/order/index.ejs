@@ -16,7 +16,7 @@
                 
                 <div id="filter-div">
 
-                    <!-- sort -->
+                    <!-- sort
                     <div id="sort-div">
                         <a href="#" class="sort-filter mr-2" id="sort-button">
                             <p style="margin-bottom: 0.5rem; display: flex; align-items: center; margin-right: 10px;">
@@ -28,7 +28,7 @@
                                 <option value="descending">Descending</option>
                             </select>
                         </a>
-                    </div>
+                    </div> -->
                     
 
                     <!-- filter -->
@@ -106,6 +106,13 @@
 
         <div class="card text-center" style="width: 18rem;">
             <div class="card-body">
+                <h5 class="card-title">Total overdue: </h5>
+                <h1 class="card-text"><%= overdue.length %> </h1>
+            </div>
+        </div>
+
+        <div class="card text-center" style="width: 18rem;">
+            <div class="card-body">
                 <h5 class="card-title">Deliveries today: </h5>
                 <h1 class="card-text"><%= deliveriesToday.length %> </h1>
             </div>
@@ -122,13 +129,6 @@
             <div class="card-body">
                 <h5 class="card-title">Total unfulfilled: </h5>
                 <h1 class="card-text"><%= unfulfilled.length %> </h1>
-            </div>
-        </div>
-
-        <div class="card text-center" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Total overdue: </h5>
-                <h1 class="card-text"><%= overdue.length %> </h1>
             </div>
         </div>
 

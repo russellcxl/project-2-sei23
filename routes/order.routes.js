@@ -4,12 +4,13 @@ const User = require("../models/user.model");
 const Customer = require("../models/customer.model");
 const moment = require("moment");
 const isLoggedin = require("../lib/checkBlock");
+const axios = require("axios");
 
 
 //==================== new ====================//
 
 
-router.get("/new", isLoggedin, async (req, res) => {
+router.get("/new", async (req, res) => {
     try {
         res.render("order/new");
     }
@@ -22,8 +23,9 @@ router.get("/new", isLoggedin, async (req, res) => {
 
 router.post("/new", async (req, res) => {
     try {
-        console.log(req.body);
-        let { name, orders, phone, address, postal, expectedDelivery } = req.body;
+        let { name, orders, phone, postal, expectedDelivery } = req.body;
+        let addressData = await axios.get(`https://developers.onemap.sg/commonapi/search?searchVal=${postal}&returnGeom=Y&getAddrDetails=Y`)
+        let address = addressData.data.results[0].BLK_NO + " " + addressData.data.results[0].ROAD_NAME;
 
         let customer = await new Customer({
             name: name,
@@ -118,7 +120,7 @@ router.get("/index", async (req, res) => {
 //==================== fulfill ====================//
 
 
-router.post("/fulfill/:id", isLoggedin, async (req, res) => {
+router.post("/fulfill/:id", async (req, res) => {
     try {
         await Order.findByIdAndUpdate(req.params.id, {status: "done"});
         res.redirect("/delivery/index");
@@ -132,7 +134,7 @@ router.post("/fulfill/:id", isLoggedin, async (req, res) => {
 //==================== edit/delete ====================//
 
 
-router.get("/edit/:id", isLoggedin, async (req, res) => {
+router.get("/edit/:id", async (req, res) => {
     try {
         let order = await Order.findById(req.params.id).populate("customer", "-orders");
         res.render("order/edit", {order});
@@ -146,7 +148,9 @@ router.get("/edit/:id", isLoggedin, async (req, res) => {
 router.post("/edit/:id", async (req, res) => {
     try {
 
-        let { name, orders, phone, address, postal, expectedDelivery, status } = req.body;
+        let { name, orders, phone, postal, expectedDelivery, status } = req.body;
+        let addressData = await axios.get(`https://developers.onemap.sg/commonapi/search?searchVal=${postal}&returnGeom=Y&getAddrDetails=Y`)
+        let address = addressData.data.results[0].BLK_NO + " " + addressData.data.results[0].ROAD_NAME;
 
         await Order.findByIdAndUpdate(req.params.id, 
                 {
