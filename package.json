@@ -23,7 +23,7 @@
     "express-session": "^1.17.1",
     "mdbootstrap": "^4.19.1",
     "method-override": "^3.0.0",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "mongoose": "^5.9.24",
     "nodemon": "^2.0.4",
     "passport": "^0.4.1",
